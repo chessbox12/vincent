@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vincent Le | Future Heart Mechanic</title>
+    <style>
+        :root {
+            --rainbow-gradient: linear-gradient(90deg, #ff0000, #ff8700, #ffd300, #deff0a, #a1ff0a, #0aff99, #0aefff, #147df5, #580aff, #be0aff);
+            --trans-bg: linear-gradient(180deg, #5BCEFA 20%, #F5A9B8 20%, #F5A9B8 40%, #FFFFFF 40%, #FFFFFF 60%, #F5A9B8 60%, #F5A9B8 80%, #5BCEFA 80%);
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif; /* Just a hint of chaos */
+            margin: 0;
+            background-color: #f0f2f5;
+            color: #1a202c;
+            overflow-x: hidden;
+        }
+
+        .top-bar { height: 15px; background: var(--rainbow-gradient); }
+
+        header {
+            background: white;
+            padding: 100px 20px;
+            text-align: center;
+            border-bottom: 5px solid #000;
+        }
+
+        .glitch-name {
+            font-size: 5rem;
+            font-weight: 900;
+            margin: 0;
+            text-transform: uppercase;
+            background: var(--rainbow-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(2px 2px #000);
+        }
+
+        .container { max-width: 1000px; margin: -50px auto 0; padding: 20px; }
+
+        .card {
+            background: white;
+            border: 3px solid #000;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 10px 10px 0px #000;
+        }
+
+        .roadmap-item {
+            border-left: 5px dashed var(--be0aff);
+            padding-left: 20px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .roadmap-item::before {
+            content: '🩺';
+            position: absolute;
+            left: -20px;
+            background: white;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 20px;
+            border: 2px solid #000;
+            border-radius: 15px;
+        }
+
+        .funny-link {
+            color: #ff00ff;
+            font-weight: bold;
+            text-decoration: underline wavy #580aff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 100px;
+            background: var(--trans-bg);
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-bar"></div>
+
+<header>
+    <div class="badge">ESTIMATED GRADUATION: 2046 (RIP)</div>
+    <h1 class="glitch-name">VINCENT LE</h1>
+    <p style="font-size: 1.5rem;">The only Surgeon who can solve a Bayesian proof while you're under. 🏳️‍🌈</p>
+</header>
+
+<div class="container">
+    
+    <div class="card">
+        <h2>Why Vincent?</h2>
+        <p>Most surgeons just see a heart. Vincent Le sees a <strong>four-chambered vector projection</strong> with a 99.9% probability of success (pending his third espresso). He’s too gay to fail and too good at math to make a mistake.</p>
+        <div class="stats-grid">
+            <div class="stat-box" style="background: #fff0f0;">
+                <h3>15+ Years</h3>
+                <p>Of staying in school because he loves the aesthetic of debt.</p>
+            </div>
+            <div class="stat-box" style="background: #f0f0ff;">
+                <h3>9,000%</h3>
+                <p>More likely to play Chappell Roan in the OR than any other resident.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>The 20-Year "Le-gacy" Plan</h2>
+        
+        <div class="roadmap-item">
+            <span class="badge" style="background: #E40303;">2026-2029: The "I'm Smart" Era</span>
+            <h3>Pre-Med Chaos</h3>
+            <p>Mastering Organic Chemistry and complaining about it on every platform. Using Bayesian logic to calculate the exact minimum amount of sleep required to stay alive.</p>
+            <a class="funny-link" href="https://www.mcat-prep.com/" target="_blank">The Test That Determines My Worth</a>
+        </div>
+
+        <div class="roadmap-item">
+            <span class="badge" style="background: #FF8C00;">2030-2034: The "God Help Me" Era</span>
+            <h3>Medical School</h3>
+            <p>Learning every bone in the body and then forgetting them immediately after the exam. First time holding a scalpel (very exciting, very slay).</p>
+            <a class="funny-link" href="https://www.aamc.org/" target="_blank">Applying to be a Professional Nerd</a>
+        </div>
+
+        <div class="roadmap-item">
+            <span class="badge" style="background: #008026;">2034-2041: The "No Sleep" Era</span>
+            <h3>Integrated CT Residency</h3>
+            <p>7 years of living in a hospital. Vincent becomes 40% caffeine and 60% sheer audacity. Mastering the "Le Maneuver" (it's like a regular bypass but with more flare).</p>
+            <a class="funny-link" href="https://www.tsda.org/" target="_blank">The Resident's Survival Guide</a>
+        </div>
+
+        <div class="roadmap-item">
+            <span class="badge" style="background: #24408E;">2042-2046: The "I'm Rich Now" Era</span>
+            <h3>Attending Surgeon</h3>
+            <p>Finally, the bag is secured. Specializing in high-stakes cardiac repairs and ensuring the hospital's DEI committee is actually doing something.</p>
+            <a class="funny-link" href="https://www.sts.org/" target="_blank">The Big Leagues</a>
+        </div>
+    </div>
+
+    <div class="card" style="background: #000; color: #fff;">
+        <h2>Current Status: 🫀 Processing...</h2>
+        <p>Vincent is currently busy being better at math than you. Check back in 2046 for an appointment.</p>
+    </div>
+
+</div>
+
+<footer>
+    <h2 style="background: white; display: inline-block; padding: 10px;">PROUD AS HELL. SURGICAL AS F***.</h2>
+    <p>Copyright &copy; 2026 Vincent Le Enterprises. All Rights Reserved. Stay Hydrated.</p>
+</footer>
+
+</body>
+</html>
