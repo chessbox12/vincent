@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0b1226">
+  <meta name="description" content="Quick Inbox — create a temporary email address in one tap and grab verification codes fast. Powered by Mail.tm.">
+  <title>Quick Inbox</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <span class="brand">
+        <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect x="2" y="5" width="20" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M4 8l8 6 8-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Quick Inbox
+      </span>
+      <span id="status" class="status" role="status" data-kind="idle">Ready</span>
+    </div>
+  </header>
+
+  <main class="content">
+
+    <div id="notice" class="notice" role="status" hidden></div>
+
+    <!-- Start state: nothing created yet -->
+    <section id="start-view" aria-labelledby="start-heading">
+      <h1 id="start-heading" class="start-heading">A throwaway email address in one tap</h1>
+      <p class="start-copy">
+        Create a temporary inbox, use the address wherever a site asks for an
+        email, and the verification code it sends appears right here.
+      </p>
+      <button id="create-btn" type="button" class="primary big">Create temporary inbox</button>
+      <p id="create-hint" class="hint" role="status"></p>
+    </section>
+
+    <!-- Active inbox -->
+    <section id="inbox-view" aria-label="Your temporary inbox" hidden>
+
+      <div class="card address-card">
+        <h2 class="card-label">Your temporary address</h2>
+        <div class="address-row">
+          <output id="address" class="address" for="create-btn"></output>
+          <button id="copy-address-btn" type="button" class="secondary">Copy</button>
+        </div>
+        <div class="inbox-actions">
+          <button id="new-inbox-btn" type="button" class="ghost">New inbox</button>
+          <button id="forget-btn" type="button" class="ghost danger">Forget this inbox</button>
+        </div>
+        <div id="confirm-bar" class="confirm-bar" hidden>
+          <p id="confirm-text" class="confirm-text"></p>
+          <div class="confirm-actions">
+            <button id="confirm-yes" type="button" class="secondary danger">Yes, continue</button>
+            <button id="confirm-no" type="button" class="ghost">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="code-card" class="card code-card" hidden>
+        <h2 id="code-label" class="card-label accent">Latest code</h2>
+        <div class="code-row">
+          <strong id="code-value" class="code-value"></strong>
+          <button id="copy-code-btn" type="button" class="primary">Copy code</button>
+        </div>
+        <p id="code-meta" class="code-meta"></p>
+      </div>
+
+      <button id="refresh-btn" type="button" class="secondary wide">Refresh inbox</button>
+
+      <section aria-label="Messages" class="messages">
+        <h2 class="section-heading">Messages</h2>
+        <p id="inbox-empty" class="empty">
+          Waiting for the first email… New messages usually show up within
+          seconds of being sent. This page checks automatically every few
+          seconds while it is open.
+        </p>
+        <ul id="message-list" class="message-list"></ul>
+      </section>
+
+    </section>
+
+    <!-- Message detail -->
+    <section id="detail-view" aria-label="Message" hidden>
+      <button id="detail-back" type="button" class="ghost back">← Back to inbox</button>
+      <article class="card detail-card">
+        <h2 id="detail-subject" class="detail-subject"></h2>
+        <p class="detail-meta"><span id="detail-from"></span> · <span id="detail-time"></span></p>
+        <div id="detail-code-row" class="detail-code-row" hidden>
+          <span class="card-label accent">Code found in this email</span>
+          <div class="code-row">
+            <strong id="detail-code" class="code-value small"></strong>
+            <button id="detail-copy-code" type="button" class="primary">Copy code</button>
+          </div>
+        </div>
+        <pre id="detail-body" class="detail-body"></pre>
+      </article>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Temporary email service powered by <a href="https://mail.tm" rel="noopener noreferrer">Mail.tm</a>.</p>
+    <p class="footnote">
+      Temporary inboxes are not suitable for banking, healthcare, password
+      recovery or important accounts. Some websites reject disposable email
+      addresses even after sending a code.
+    </p>
+  </footer>
+
+  <p id="announcer" class="visually-hidden" aria-live="polite"></p>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
