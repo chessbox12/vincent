@@ -72,21 +72,18 @@ phone and desktop widths.
 
 ## Deploy to GitHub Pages
 
-This repository includes `.github/workflows/deploy-pages.yml`, which publishes the
-repository root on every push to the default branch. Because Quick Inbox lives in
-the `quick-inbox/` subfolder and uses only **relative** asset paths, it works from
-a subpath — no configuration needed.
+This repository serves GitHub Pages directly from the `main` branch, so once these
+files are on `main` the app is published automatically — no extra configuration and
+no build step. Because Quick Inbox lives in the `quick-inbox/` subfolder and uses
+only **relative** asset paths, it works from a subpath:
 
-1. In the repository, open **Settings → Pages**.
-2. Under **Build and deployment → Source**, choose **GitHub Actions**.
-3. Push to the default branch. When the workflow finishes, the app is served at:
+```
+https://<your-username>.github.io/<repository>/quick-inbox/
+```
 
-   ```
-   https://<your-username>.github.io/<repository>/quick-inbox/
-   ```
-
-The workflow requests only the permissions Pages needs (`pages: write`,
-`id-token: write`, `contents: read`).
+If Pages is not enabled yet (for example on a fresh fork): open **Settings → Pages**,
+and under **Build and deployment → Source** choose **Deploy from a branch**, then
+select `main` and `/ (root)`.
 
 ## Attribution
 
