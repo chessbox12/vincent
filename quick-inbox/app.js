@@ -14,7 +14,13 @@
  * token or domain — credentials are always created fresh in the browser.
  */
 
-const API_BASE = "https://api.mail.tm";
+// Where to reach Mail.tm. In a browser this is the relay URL set in config.js
+// (a static page can't call api.mail.tm directly — see cloudflare-worker.js);
+// in Node (tests) window is undefined, so it stays the direct API.
+const API_BASE = (
+  (typeof window !== "undefined" && window.QUICK_INBOX_API_BASE) ||
+  "https://api.mail.tm"
+).replace(/\/+$/, "");
 const STORAGE_KEY = "quickInbox.session.v1";
 const POLL_VISIBLE_MS = 9000; // ~8–10 s while the tab is visible
 const POLL_HIDDEN_MS = 60000; // greatly reduced while the tab is hidden

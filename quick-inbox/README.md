@@ -31,13 +31,42 @@ credentials are created in the browser every time — nothing is hardcoded.
 
 ```
 quick-inbox/
-├── index.html      # markup and states
-├── styles.css      # dark-navy, indigo-accented, mobile-first styling
-├── app.js          # API layer + verification-code logic + UI (no dependencies)
+├── index.html            # markup and states
+├── styles.css            # dark-navy, indigo-accented, mobile-first styling
+├── app.js                # API layer + verification-code logic + UI (no dependencies)
+├── config.js             # sets the Mail.tm relay URL (see "Reaching Mail.tm")
+├── cloudflare-worker.js  # the relay: a tiny Cloudflare Worker
 ├── favicon.svg
 ├── README.md
-└── tests/          # Node unit tests (see below)
+└── tests/                # Node unit tests (see below)
 ```
+
+## Reaching Mail.tm (the relay)
+
+A page served from GitHub Pages **cannot call `https://api.mail.tm` directly**:
+Mail.tm doesn't send the cross-origin (CORS) headers a browser requires when the
+page is on another domain, so the request is blocked and the app shows
+"Could not reach Mail.tm". (Opened from `localhost` or `file://` it often works,
+which is why local testing can pass while the deployed site can't connect.)
+
+The fix is a tiny **relay** that the page calls instead, which forwards to Mail.tm
+server-side and adds the missing CORS headers. `cloudflare-worker.js` is that relay
+— a free [Cloudflare Worker](https://workers.cloudflare.com/):
+
+1. Sign in at <https://dash.cloudflare.com> (a free account is enough).
+2. **Workers & Pages → Create application → Create Worker**. Name it
+   (e.g. `quick-inbox-relay`) and click **Deploy**.
+3. Click **Edit code**, replace the sample with the contents of
+   `cloudflare-worker.js`, and click **Deploy**.
+4. Copy the Worker URL (e.g. `https://quick-inbox-relay.YOURNAME.workers.dev`).
+5. Put it in `config.js`:
+
+   ```js
+   window.QUICK_INBOX_API_BASE = "https://quick-inbox-relay.YOURNAME.workers.dev";
+   ```
+
+The Worker only ever forwards to `api.mail.tm`, so it can't be used as a general
+open proxy, and your inbox traffic stays on infrastructure you control.
 
 ## Run locally
 
