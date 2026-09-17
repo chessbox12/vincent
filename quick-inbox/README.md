@@ -49,9 +49,27 @@ page is on another domain, so the request is blocked and the app shows
 "Could not reach Mail.tm". (Opened from `localhost` or `file://` it often works,
 which is why local testing can pass while the deployed site can't connect.)
 
-The fix is a tiny **relay** that the page calls instead, which forwards to Mail.tm
-server-side and adds the missing CORS headers. `cloudflare-worker.js` is that relay
-— a free [Cloudflare Worker](https://workers.cloudflare.com/):
+The fix is a **relay** the page calls instead, which reaches Mail.tm and adds the
+missing CORS headers. `config.js` controls which relay is used, and there are two
+options.
+
+### Option A — shared public relay (shipped default, no setup)
+
+Out of the box `config.js` routes requests through a public CORS relay, so the
+deployed site works with no configuration:
+
+```js
+window.QUICK_INBOX_PROXY = "https://corsproxy.io/?url={url}";
+```
+
+The trade-off: your throwaway-inbox traffic passes through that third-party
+service, and public relays can be slower or occasionally rate-limited. For
+disposable verification codes that's usually fine. Swapping to a different public
+relay is a one-line change (any template with a `{url}` placeholder works).
+
+### Option B — your own Cloudflare Worker (private, reliable)
+
+For a relay only you control, deploy the free Worker in `cloudflare-worker.js`:
 
 1. Sign in at <https://dash.cloudflare.com> (a free account is enough).
 2. **Workers & Pages → Create application → Create Worker**. Name it
@@ -59,10 +77,11 @@ server-side and adds the missing CORS headers. `cloudflare-worker.js` is that re
 3. Click **Edit code**, replace the sample with the contents of
    `cloudflare-worker.js`, and click **Deploy**.
 4. Copy the Worker URL (e.g. `https://quick-inbox-relay.YOURNAME.workers.dev`).
-5. Put it in `config.js`:
+5. Point `config.js` at it and turn the public relay off:
 
    ```js
    window.QUICK_INBOX_API_BASE = "https://quick-inbox-relay.YOURNAME.workers.dev";
+   window.QUICK_INBOX_PROXY = "";
    ```
 
 The Worker only ever forwards to `api.mail.tm`, so it can't be used as a general
