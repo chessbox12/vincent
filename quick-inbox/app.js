@@ -14,7 +14,24 @@
  * token or domain — credentials are always created fresh in the browser.
  */
 
-const API_BASE = "https://api.mail.tm";
+// How the app reaches Mail.tm.
+//
+// A static page (GitHub Pages) can't call https://api.mail.tm directly —
+// Mail.tm sends no cross-origin (CORS) headers — so config.js can route
+// requests through a relay. Two optional knobs, both set in config.js:
+//   QUICK_INBOX_API_BASE — the Mail.tm base URL, or your own Worker relay
+//   QUICK_INBOX_PROXY    — a CORS-proxy template containing "{url}", which
+//                          wraps the full request URL (for shared public relays)
+// In Node (tests) window is undefined, so both fall back to the direct API.
+const cfg = typeof window !== "undefined" ? window : {};
+const API_BASE = (cfg.QUICK_INBOX_API_BASE || "https://api.mail.tm").replace(/\/+$/, "");
+const API_PROXY = cfg.QUICK_INBOX_PROXY || "";
+
+/** Full URL to fetch for a Mail.tm path, wrapped through the proxy if set. */
+function buildRequestUrl(path) {
+  const target = API_BASE + path;
+  return API_PROXY ? API_PROXY.replace("{url}", encodeURIComponent(target)) : target;
+}
 const STORAGE_KEY = "quickInbox.session.v1";
 const POLL_VISIBLE_MS = 9000; // ~8–10 s while the tab is visible
 const POLL_HIDDEN_MS = 60000; // greatly reduced while the tab is hidden
@@ -158,7 +175,7 @@ async function apiRequest(path, { method = "GET", token, body, signal } = {}) {
 
   let res;
   try {
-    res = await globalThis.fetch(API_BASE + path, {
+    res = await globalThis.fetch(buildRequestUrl(path), {
       method,
       headers,
       body: body === undefined ? undefined : JSON.stringify(body),
@@ -830,6 +847,7 @@ function initQuickInbox() {
 if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     API_BASE,
+    buildRequestUrl,
     ApiError,
     randomString,
     randomLocalPart,
